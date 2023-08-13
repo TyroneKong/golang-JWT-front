@@ -14,10 +14,7 @@ import {
 import { Inputs, schema } from "../../schemas/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
-import useUser from "../contexts/userContext";
-import useToken from "../hooks/token";
-
-function Login() {
+function Register() {
   const toast = useToast();
 
   const {
@@ -30,28 +27,23 @@ function Login() {
     mode: "onChange",
   });
   const navigate = useNavigate();
-  const { setToken } = useToken();
 
-  const { setAuthorized } = useUser();
-  const login = useMutation(
+  const registerUser = useMutation(
     (body: { username: string; password: string }) =>
-      axios.post(`http://localhost:8080/login`, body),
+      axios.post(`http://localhost:8080/register`, body),
     {
-      onSuccess: ({ data }) => {
-        setToken(data.token);
-        localStorage.setItem("token", data.token);
-        setAuthorized(true);
+      onSuccess: () => {
         toast({
-          title: "Logged in",
-          description: "Login Successful",
+          title: "Register",
+          description: "Register Successful",
           status: "success",
         });
-        navigate("/albums");
+        navigate("/login");
       },
       onError: () => {
         toast({
-          title: "Not logged in",
-          description: "Login Unsuccessful",
+          title: "Not registered",
+          description: "Register Unsuccessful",
           status: "error",
         });
       },
@@ -59,13 +51,12 @@ function Login() {
   );
 
   const submit = (data: Inputs) => {
-    login.mutate(data);
+    registerUser.mutate(data);
     reset();
   };
-
   return (
     <VStack>
-      <Text as="h2">Login Page</Text>
+      <Text as="h2">Register Page</Text>
       <form typeof="onSubmit" onSubmit={handleSubmit(submit)}>
         <FormControl isRequired>
           <FormLabel>username</FormLabel>
@@ -91,11 +82,11 @@ function Login() {
           type="submit"
           isDisabled={!isValid}
         >
-          Login
+          Register
         </Button>
       </form>
     </VStack>
   );
 }
 
-export default Login;
+export default Register;
