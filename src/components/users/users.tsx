@@ -29,9 +29,7 @@ function Users() {
 
   const columnHelper = createColumnHelper<Usertype>();
 
-  const dateConverter = date => {
-    return new Date(date).toISOString().substring(0, 10);
-  };
+  const dateConverter = date => new Date(date).toISOString().substring(0, 10);
 
   const columns = [
     columnHelper.accessor("ID", {
