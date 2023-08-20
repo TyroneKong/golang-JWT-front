@@ -7,6 +7,7 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   SortingState,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 
 import { Usertype } from "../../types/types";
@@ -21,6 +22,7 @@ import {
   TableCaption,
   TableContainer,
   Button,
+  Input,
 } from "@chakra-ui/react";
 import { useState } from "react";
 
@@ -56,6 +58,7 @@ function Users() {
   ];
 
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [filtering, setFiltering] = useState("");
 
   const table = useReactTable<Usertype>({
     data,
@@ -63,10 +66,14 @@ function Users() {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+
     state: {
       sorting: sorting,
+      globalFilter: filtering,
     },
     onSortingChange: setSorting,
+    onGlobalFilterChange: setFiltering,
   });
 
   const rowData = () => {
@@ -77,6 +84,11 @@ function Users() {
 
   return (
     <TableContainer>
+      <Input
+        value={filtering}
+        placeholder="search by username"
+        onChange={e => setFiltering(e.target.value)}
+      />
       <Table variant="striped" colorScheme="teal">
         <TableCaption>All Users</TableCaption>
         <Thead>

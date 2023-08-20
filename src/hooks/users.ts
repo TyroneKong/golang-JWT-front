@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useQuery } from "react-query";
-import { Response, Users } from "../types/types";
+import { Response, Usertype } from "../types/types";
 
 const getUsers = async (signal?: AbortSignal) => {
-  const { data } = await axios.get<Response<Users>>(
+  const { data } = await axios.get<Response<Usertype>>(
     "http://localhost:8080/allusers",
     {
       signal,
