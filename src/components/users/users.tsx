@@ -5,14 +5,11 @@ import {
   flexRender,
   createColumnHelper,
   getPaginationRowModel,
+  getSortedRowModel,
+  SortingState,
 } from "@tanstack/react-table";
-type Users = {
-  ID: number;
-  CreatedAt: string;
-  UpdatedAt: string;
-  DeletedAt: string;
-  username: string;
-};
+
+import { Usertype } from "../../types/types";
 
 import {
   Table,
@@ -25,10 +22,12 @@ import {
   TableContainer,
   Button,
 } from "@chakra-ui/react";
+import { useState } from "react";
 
 function Users() {
   const { data } = UseQueryUsers();
-  const columnHelper = createColumnHelper<Users>();
+
+  const columnHelper = createColumnHelper<Usertype>();
 
   const dateConverter = date => {
     return new Date(date).toISOString().substring(0, 10);
@@ -58,11 +57,18 @@ function Users() {
     }),
   ];
 
-  const table = useReactTable({
+  const [sorting, setSorting] = useState<SortingState>([]);
+
+  const table = useReactTable<Usertype>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting: sorting,
+    },
+    onSortingChange: setSorting,
   });
 
   const rowData = () => {
@@ -79,13 +85,21 @@ function Users() {
           {table.getHeaderGroups().map(headerGroup => (
             <Tr key={headerGroup.id}>
               {headerGroup.headers.map(header => (
-                <Th key={header.id}>
+                <Th
+                  fontSize={20}
+                  key={header.id}
+                  onClick={() => header.column.getToggleSortingHandler()}
+                >
                   {header.isPlaceholder
                     ? null
                     : flexRender(
                         header.column.columnDef.header,
                         header.getContext()
                       )}
+                  {{
+                    asc: " 🔼",
+                    desc: " 🔽",
+                  }[header.column.getIsSorted() as string] ?? null}
                 </Th>
               ))}
             </Tr>
@@ -103,22 +117,24 @@ function Users() {
           ))}
         </Tbody>
       </Table>
-      <Button colorScheme="blue">First page</Button>
+      <Button colorScheme="blue" onClick={() => table.setPageIndex(0)}>
+        First page
+      </Button>
       <Button
-      // isDisabled={!table.getCanPreviousPage()}
-      // onClick={() => table.previousPage()}
+        isDisabled={!table.getCanPreviousPage()}
+        onClick={() => table.previousPage()}
       >
         Previous page
       </Button>
       <Button
-      // isDisabled={!table.getCanNextPage()}
-      // onClick={() => table.nextPage()}
+        isDisabled={data && !table.getCanNextPage()}
+        onClick={() => table.nextPage()}
       >
         Next page
       </Button>
       <Button
         colorScheme="blue"
-        // onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+        onClick={() => table.setPageIndex(table.getPageCount() - 1)}
       >
         Last page
       </Button>

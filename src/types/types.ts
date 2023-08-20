@@ -5,10 +5,14 @@ export type Albums = {
   Price: number;
 };
 
-export type Users = {
+export type Usertype = {
   ID: number;
   CreatedAt: string;
   UpdatedAt: string;
   DeletedAt: string;
   username: string;
+};
+
+export type Response<T> = {
+  data: T[];
 };

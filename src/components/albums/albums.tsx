@@ -4,13 +4,12 @@ import { Text, Box } from "@chakra-ui/react";
 import axios from "axios";
 import useToken from "../../hooks/token";
 import { useEffect } from "react";
-import { useReactTable } from "@tanstack/react-table";
 
 function Albums() {
   const { data } = UseQueryAlbums();
   const { token, setToken } = useToken();
   console.log(token);
-  // const table = useReactTable(options)
+
   const getRefreshToken = async () => {
     const response = await axios.post(
       "/ref/refresh",
