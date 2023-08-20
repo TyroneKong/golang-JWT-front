@@ -6,11 +6,11 @@ export type Albums = {
 };
 
 export type Usertype = {
-  ID: number;
-  CreatedAt: string;
-  UpdatedAt: string;
-  DeletedAt: string;
+  id: number;
+  name: string;
   username: string;
+  email: string;
+  password: string;
 };
 
 export type Response<T> = {

@@ -1,20 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
 import "./index.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ChakraProvider } from "@chakra-ui/react";
-import { UserContextProvider } from "./contexts/userContext.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from "./components/login.tsx";
-import Register from "./components/register.tsx";
-import Albums from "./components/albums/albums.tsx";
-import ProtectedRoute from "./components/protected-route.tsx";
-import Users from "./components/users/users.tsx";
+import { UserContextProvider } from "./contexts/userContext";
+import App from "./App";
+import Login from "./components/login";
+import Register from "./components/register";
+import Albums from "./components/albums/albums";
+import ProtectedRoute from "./components/protected-route";
+import Users from "./components/users/users";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/register",
     element: <Register />,
   },
   {
@@ -31,7 +31,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/users",
-    element: <Users />,
+    element: (
+      <ProtectedRoute>
+        <Users />
+      </ProtectedRoute>
+    ),
   },
 ]);
 

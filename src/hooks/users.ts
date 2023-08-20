@@ -1,22 +1,22 @@
-import axios from "axios";
 import { useQuery } from "react-query";
-import { Response, Usertype } from "../types/types";
+import { Usertype } from "../types/types";
+import axiosRequest from "../requests/requests";
 
 const getUsers = async (signal?: AbortSignal) => {
-  const { data } = await axios.get<Response<Usertype>>(
-    "http://localhost:8080/allusers",
+  const { data } = await axiosRequest.get<Usertype[]>(
+    "/allusers",
+
     {
       signal,
     }
   );
-  return data.data;
+  return data;
 };
 
-const UseQueryUsers = () => {
-  return useQuery({
+const UseQueryUsers = () =>
+  useQuery({
     queryKey: ["users"],
     queryFn: ({ signal }) => getUsers(signal),
   });
-};
 
 export default UseQueryUsers;

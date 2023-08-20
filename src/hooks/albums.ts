@@ -1,14 +1,14 @@
 import { useQuery } from "react-query";
-import { Response, Albums } from "../types/types";
-import { axiosRequest } from "../requests/requests";
+import { Albums } from "../types/types";
+import axiosRequest from "../requests/requests";
 import useToken from "./token";
 
 const getAlbums = async (token: string, signal?: AbortSignal) => {
-  const { data } = await axiosRequest.get<Response<Albums>>("/albums", {
+  const { data } = await axiosRequest.get<Albums[]>("/albums", {
     headers: { Authorization: `Bearer ${token}` },
     signal,
   });
-  return data.data;
+  return data;
 };
 
 const UseQueryAlbums = () => {

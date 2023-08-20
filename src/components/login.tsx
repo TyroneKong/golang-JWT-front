@@ -1,5 +1,4 @@
 import { useMutation } from "react-query";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import {
   Button,
@@ -11,11 +10,11 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { Inputs, schema } from "../../schemas/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
+import { Inputs, schema } from "../../schemas/loginSchema";
 import useUser from "../contexts/userContext";
-import useToken from "../hooks/token";
+import axiosRequest from "../requests/requests";
 
 function Login() {
   const toast = useToast();
@@ -30,23 +29,20 @@ function Login() {
     mode: "onChange",
   });
   const navigate = useNavigate();
-  const { setToken } = useToken();
 
   const { setAuthorized } = useUser();
   const login = useMutation(
-    (body: { username: string; password: string }) =>
-      axios.post(`http://localhost:8080/login`, body),
+    (body: { email: string; password: string }) =>
+      axiosRequest.post("/login", body),
     {
-      onSuccess: ({ data }) => {
-        setToken(data.token);
-        localStorage.setItem("token", data.token);
+      onSuccess: () => {
         setAuthorized(true);
         toast({
           title: "Logged in",
           description: "Login Successful",
           status: "success",
         });
-        navigate("/albums");
+        navigate("/users");
       },
       onError: () => {
         toast({
@@ -65,13 +61,16 @@ function Login() {
 
   return (
     <VStack>
+      <Button onClick={() => navigate("/register")} colorScheme="blue">
+        Register
+      </Button>
       <Text as="h2">Login Page</Text>
       <form typeof="onSubmit" onSubmit={handleSubmit(submit)}>
         <FormControl isRequired>
-          <FormLabel>username</FormLabel>
-          <Input {...register("username")} />
+          <FormLabel>Email</FormLabel>
+          <Input {...register("email")} />
           <FormErrorMessage style={{ color: "red" }}>
-            {errors.username?.message}
+            {errors.email?.message}
           </FormErrorMessage>
         </FormControl>
 

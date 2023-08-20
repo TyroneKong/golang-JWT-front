@@ -1,5 +1,4 @@
-import { ReactNode, createContext, useContext } from "react";
-import { useState } from "react";
+import { ReactNode, createContext, useContext, useMemo, useState } from "react";
 
 type Child = {
   children: ReactNode;
@@ -11,17 +10,20 @@ type User = {
 };
 const user = createContext({} as User);
 
-export const UserContextProvider = ({ children }: Child) => {
+export function UserContextProvider({ children }: Child) {
   const [authorized, setAuthorized] = useState(false);
 
   // test data
-  const value = {
-    authorized,
-    setAuthorized,
-  };
+  const value = useMemo(
+    () => ({
+      authorized,
+      setAuthorized,
+    }),
+    [authorized]
+  );
 
   return <user.Provider value={value}>{children}</user.Provider>;
-};
+}
 
 const useUser = (): User => useContext(user);
 

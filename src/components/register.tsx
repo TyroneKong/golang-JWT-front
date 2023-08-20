@@ -1,5 +1,4 @@
 import { useMutation } from "react-query";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import {
   Button,
@@ -11,9 +10,11 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { Inputs, schema } from "../../schemas/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
+import { Inputs, schema } from "../../schemas/registerSchema";
+import axiosRequest from "../requests/requests";
+
 function Register() {
   const toast = useToast();
 
@@ -29,8 +30,8 @@ function Register() {
   const navigate = useNavigate();
 
   const registerUser = useMutation(
-    (body: { username: string; password: string }) =>
-      axios.post(`http://localhost:8080/register`, body),
+    (body: { email: string; password: string }) =>
+      axiosRequest.post(`/register`, body),
     {
       onSuccess: () => {
         toast({
@@ -56,13 +57,30 @@ function Register() {
   };
   return (
     <VStack>
+      <Button colorScheme="blue" onClick={() => navigate("/login")}>
+        Log in
+      </Button>
       <Text as="h2">Register Page</Text>
       <form typeof="onSubmit" onSubmit={handleSubmit(submit)}>
         <FormControl isRequired>
-          <FormLabel>username</FormLabel>
+          <FormLabel>Name</FormLabel>
+          <Input {...register("name")} />
+          <FormErrorMessage style={{ color: "red" }}>
+            {errors.name?.message}
+          </FormErrorMessage>
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel>Username</FormLabel>
           <Input {...register("username")} />
           <FormErrorMessage style={{ color: "red" }}>
             {errors.username?.message}
+          </FormErrorMessage>
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel>Email</FormLabel>
+          <Input {...register("email")} />
+          <FormErrorMessage style={{ color: "red" }}>
+            {errors.email?.message}
           </FormErrorMessage>
         </FormControl>
 

@@ -6,7 +6,7 @@ type Props = {
   children: ReactNode;
 };
 
-const ProtectedRoute = ({ children }: Props) => {
+function ProtectedRoute({ children }: Props) {
   const { authorized } = useUser();
   console.log("authorized", authorized);
 
@@ -14,6 +14,6 @@ const ProtectedRoute = ({ children }: Props) => {
     return <Navigate to="/login" />;
   }
   return children;
-};
+}
 
 export default ProtectedRoute;

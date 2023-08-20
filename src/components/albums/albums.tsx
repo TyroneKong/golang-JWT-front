@@ -1,27 +1,24 @@
+import { Text, Box } from "@chakra-ui/react";
+import { useCallback, useEffect } from "react";
 import UseQueryAlbums from "../../hooks/albums";
 import Logout from "../logout";
-import { Text, Box } from "@chakra-ui/react";
-import axios from "axios";
 import useToken from "../../hooks/token";
-import { useEffect } from "react";
+import axiosRequest from "../../requests/requests";
 
 function Albums() {
   const { data } = UseQueryAlbums();
-  const { token, setToken } = useToken();
+  const { token } = useToken();
   console.log(token);
 
-  const getRefreshToken = async () => {
-    const response = await axios.post(
-      "/ref/refresh",
-      {},
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
-    console.log(response.data);
-  };
+  const getRefreshToken = useCallback(async () => {
+    await axiosRequest("/ref/refresh", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }, [token]);
 
   useEffect(() => {
     getRefreshToken();
-  }, []);
+  }, [getRefreshToken]);
 
   return (
     <>
