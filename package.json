@@ -20,6 +20,7 @@
     "axios": "^1.4.0",
     "eslint-config-airbnb": "^19.0.4",
     "framer-motion": "^10.15.1",
+    "lodash": "^4.17.21",
     "luxon": "^3.4.0",
     "query": "^0.2.0",
     "react": "^18.2.0",
@@ -30,6 +31,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.198",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",

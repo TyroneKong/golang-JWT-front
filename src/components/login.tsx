@@ -23,7 +23,7 @@ function Login() {
     register,
     handleSubmit,
     reset,
-    formState: { isValid, errors },
+    formState: { isValid, errors, isSubmitting },
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     mode: "onChange",
@@ -65,7 +65,7 @@ function Login() {
         Register
       </Button>
       <Text as="h2">Login Page</Text>
-      <form typeof="onSubmit" onSubmit={handleSubmit(submit)}>
+      <form onSubmit={handleSubmit(submit)}>
         <FormControl isRequired>
           <FormLabel>Email</FormLabel>
           <Input {...register("email")} />
@@ -78,6 +78,7 @@ function Login() {
           <FormLabel>password</FormLabel>
           <Input {...register("password")} />
           <FormErrorMessage style={{ color: "red" }}>
+            {" "}
             {errors.password?.message}
           </FormErrorMessage>
         </FormControl>
@@ -89,6 +90,7 @@ function Login() {
           colorScheme="blue"
           type="submit"
           isDisabled={!isValid}
+          isLoading={isSubmitting}
         >
           Login
         </Button>

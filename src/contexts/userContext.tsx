@@ -1,8 +1,14 @@
-import { ReactNode, createContext, useContext, useMemo, useState } from "react";
+import {
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
-type Child = {
-  children: ReactNode;
-};
+// type Child = {
+//   children: ReactNode;
+// };
 
 type User = {
   authorized: boolean;
@@ -10,7 +16,7 @@ type User = {
 };
 const user = createContext({} as User);
 
-export function UserContextProvider({ children }: Child) {
+export function UserContextProvider({ children }: PropsWithChildren) {
   const [authorized, setAuthorized] = useState(false);
 
   // test data
@@ -25,6 +31,6 @@ export function UserContextProvider({ children }: Child) {
   return <user.Provider value={value}>{children}</user.Provider>;
 }
 
-const useUser = (): User => useContext(user);
+const useAuth = (): User => useContext(user);
 
-export default useUser;
+export default useAuth;

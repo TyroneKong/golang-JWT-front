@@ -61,7 +61,7 @@ function Register() {
         Log in
       </Button>
       <Text as="h2">Register Page</Text>
-      <form typeof="onSubmit" onSubmit={handleSubmit(submit)}>
+      <form onSubmit={handleSubmit(submit)}>
         <FormControl isRequired>
           <FormLabel>Name</FormLabel>
           <Input {...register("name")} />
