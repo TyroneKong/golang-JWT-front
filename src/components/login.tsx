@@ -1,4 +1,4 @@
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import {
   Button,
@@ -31,28 +31,26 @@ function Login() {
   const navigate = useNavigate();
 
   const { setAuthorized } = useUser();
-  const login = useMutation(
-    (body: { email: string; password: string }) =>
+  const login = useMutation({
+    mutationFn: (body: { email: string; password: string }) =>
       axiosRequest.post("/login", body),
-    {
-      onSuccess: () => {
-        setAuthorized(true);
-        toast({
-          title: "Logged in",
-          description: "Login Successful",
-          status: "success",
-        });
-        navigate("/users");
-      },
-      onError: () => {
-        toast({
-          title: "Not logged in",
-          description: "Login Unsuccessful",
-          status: "error",
-        });
-      },
-    }
-  );
+    onSuccess: () => {
+      setAuthorized(true);
+      toast({
+        title: "Logged in",
+        description: "Login Successful",
+        status: "success",
+      });
+      navigate("/users");
+    },
+    onError: () => {
+      toast({
+        title: "Not logged in",
+        description: "Login Unsuccessful",
+        status: "error",
+      });
+    },
+  });
 
   const submit = (data: Inputs) => {
     login.mutate(data);

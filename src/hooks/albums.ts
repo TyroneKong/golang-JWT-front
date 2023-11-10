@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Albums } from "../types/types";
 import axiosRequest from "../requests/requests";
 import useToken from "./token";

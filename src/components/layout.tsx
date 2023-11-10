@@ -1,7 +1,5 @@
 import { ReactNode } from "react";
-import Sidebar from "./sidebar/sidebar";
-import { Flex } from "@chakra-ui/react";
-import { Box } from "@chakra-ui/react";
+import { Flex, Box } from "@chakra-ui/react";
 
 type Props = {
   children: ReactNode;

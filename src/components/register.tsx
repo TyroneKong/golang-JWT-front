@@ -1,4 +1,4 @@
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import {
   Button,
@@ -29,27 +29,25 @@ function Register() {
   });
   const navigate = useNavigate();
 
-  const registerUser = useMutation(
-    (body: { email: string; password: string }) =>
+  const registerUser = useMutation({
+    mutationFn: (body: { email: string; password: string }) =>
       axiosRequest.post(`/register`, body),
-    {
-      onSuccess: () => {
-        toast({
-          title: "Register",
-          description: "Register Successful",
-          status: "success",
-        });
-        navigate("/login");
-      },
-      onError: () => {
-        toast({
-          title: "Not registered",
-          description: "Register Unsuccessful",
-          status: "error",
-        });
-      },
-    }
-  );
+    onSuccess: () => {
+      toast({
+        title: "Register",
+        description: "Register Successful",
+        status: "success",
+      });
+      navigate("/login");
+    },
+    onError: () => {
+      toast({
+        title: "Not registered",
+        description: "Register Unsuccessful",
+        status: "error",
+      });
+    },
+  });
 
   const submit = (data: Inputs) => {
     registerUser.mutate(data);

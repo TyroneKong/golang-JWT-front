@@ -1,4 +1,5 @@
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
+
 import axiosRequest from "../requests/requests";
 
 const getCurrentUser = async (signal?: AbortSignal) => {

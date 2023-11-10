@@ -21,7 +21,6 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import _ from "lodash";
 import { Usertype } from "../../../types/types";
 
 type Props = {
