@@ -8,7 +8,6 @@ import axiosRequest from "../../requests/requests";
 function Albums() {
   const { data } = UseQueryAlbums();
   const { token } = useToken();
-  console.log(token);
 
   const getRefreshToken = useCallback(async () => {
     await axiosRequest("/ref/refresh", {

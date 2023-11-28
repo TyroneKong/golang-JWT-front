@@ -14,9 +14,6 @@ const getUsers = async (signal?: AbortSignal) => {
 };
 
 const UseQueryUsers = () =>
-  useQuery({
-    queryKey: ["users"],
-    queryFn: ({ signal }) => getUsers(signal),
-  });
+  useQuery({ queryKey: ["users"], queryFn: ({ signal }) => getUsers(signal) });
 
 export default UseQueryUsers;

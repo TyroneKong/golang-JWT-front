@@ -11,9 +11,7 @@ function Logout() {
     return navigate("/register");
   };
 
-  const handleLogout = () => {
-    logout();
-  };
+  const handleLogout = () => logout();
 
   return (
     <Button

@@ -5,6 +5,12 @@ export type Albums = {
   Price: number;
 };
 
+export type Products = {
+  id: number;
+  name: string;
+  serial_number: string;
+};
+
 export type Usertype = {
   id: number;
   name: string;

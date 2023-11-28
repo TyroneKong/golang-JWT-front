@@ -12,6 +12,7 @@ import Register from "./components/register";
 import Albums from "./components/albums/albums";
 import ProtectedRoute from "./components/protected-route";
 import Users from "./components/users/users";
+import Products from "./components/products/products";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
+  {
+    path: "/products",
+    element: <Products />,
+  },
 ]);
 
 const queryClient = new QueryClient();
@@ -54,7 +59,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <RouterProvider router={router} />
           <App />
         </UserContextProvider>
-        <ReactQueryDevtools />
+        <ReactQueryDevtools buttonPosition="bottom-left"/>
       </QueryClientProvider>
     </ChakraProvider>
   </React.StrictMode>

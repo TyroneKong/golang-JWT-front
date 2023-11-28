@@ -9,6 +9,7 @@ import {
   FormErrorMessage,
   Text,
   VStack,
+  Select,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
@@ -23,6 +24,7 @@ function Login() {
     register,
     handleSubmit,
     reset,
+
     formState: { isValid, errors, isSubmitting },
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
@@ -57,9 +59,13 @@ function Login() {
     reset();
   };
 
+  const navigateRegister = () => {
+    navigate("/register");
+  };
+
   return (
     <VStack>
-      <Button onClick={() => navigate("/register")} colorScheme="blue">
+      <Button onClick={navigateRegister} colorScheme="blue">
         Register
       </Button>
       <Text as="h2">Login Page</Text>
@@ -76,7 +82,6 @@ function Login() {
           <FormLabel>password</FormLabel>
           <Input {...register("password")} />
           <FormErrorMessage style={{ color: "red" }}>
-            {" "}
             {errors.password?.message}
           </FormErrorMessage>
         </FormControl>

@@ -31,6 +31,13 @@ export function UserContextProvider({ children }: PropsWithChildren) {
   return <user.Provider value={value}>{children}</user.Provider>;
 }
 
-const useAuth = (): User => useContext(user);
+const useAuth = (): User => {
+  const context = useContext(user);
+
+  if (!context) {
+    throw new Error("uer context needs to wrapped in a provider");
+  }
+  return context;
+};
 
 export default useAuth;
