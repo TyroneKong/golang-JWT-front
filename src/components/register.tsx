@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
-import { Inputs, schema } from "../../schemas/registerSchema";
+import { Inputs, schema } from "../schemas/registerSchema";
 import axiosRequest from "../requests/requests";
 
 function Register() {
