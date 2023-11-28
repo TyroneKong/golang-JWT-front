@@ -19,6 +19,14 @@ export type Usertype = {
   password: string;
 };
 
+export type Order = {
+  id: number;
+  product_id: number;
+  Product: Products;
+  user_id: number;
+  User: Usertype;
+};
+
 export type Response<T> = {
   data: T[];
 };

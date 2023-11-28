@@ -30,6 +30,7 @@ function ProductDrawer() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { isValid },
   } = useForm<Inputs>({
     resolver: zodResolver(productSchema),
@@ -52,11 +53,11 @@ function ProductDrawer() {
 
   const submit = (input: Inputs) => {
     const body: Inputs = {
-      name: input.name,
-      serial_number: input.serial_number,
+      ...input,
     };
 
-    return createProduct.mutate(body);
+    createProduct.mutate(body);
+    reset();
   };
 
   return (

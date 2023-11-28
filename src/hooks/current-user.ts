@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 
 import axiosRequest from "../requests/requests";
+import { Usertype } from "../types/types";
 
 const getCurrentUser = async (signal?: AbortSignal) => {
-  const response = await axiosRequest.get("/currentuser", {
+  const response = await axiosRequest.get<Usertype>("/currentuser", {
     signal,
   });
   return response.data;

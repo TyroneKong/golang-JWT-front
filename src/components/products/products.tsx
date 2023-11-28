@@ -1,6 +1,6 @@
 import useQueryProducts from "../../hooks/products";
 import SearchInput from "../users/search-input/search-input";
-import ProductsTable from "../users/table/products-table";
+import ProductsTable from "./table/products-table";
 import { useState } from "react";
 import ProductDrawer from "./product-drawer";
 

@@ -14,13 +14,7 @@ function Logout() {
   const handleLogout = () => logout();
 
   return (
-    <Button
-      size="lg"
-      variant="solid"
-      colorScheme="blue"
-      onClick={handleLogout}
-      mb={10}
-    >
+    <Button size="lg" variant="solid" colorScheme="blue" onClick={handleLogout}>
       Log out
     </Button>
   );
