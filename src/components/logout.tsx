@@ -7,7 +7,7 @@ function Logout() {
 
   const logout = async () => {
     await axiosRequest.get("/logout");
-
+    window.location.reload();
     return navigate("/", { replace: true });
   };
 
