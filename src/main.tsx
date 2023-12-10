@@ -9,7 +9,6 @@ import { UserContextProvider } from "./contexts/userContext";
 import App from "./App";
 import Login from "./components/login";
 import Register from "./components/register";
-import Albums from "./components/albums/albums";
 import ProtectedRoute from "./components/protected-route";
 import Users from "./components/users/users";
 import Products from "./components/products/products";
@@ -28,14 +27,7 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
   },
-  {
-    path: "/albums",
-    element: (
-      <ProtectedRoute>
-        <Albums />
-      </ProtectedRoute>
-    ),
-  },
+
   {
     path: "/users",
     element: (
