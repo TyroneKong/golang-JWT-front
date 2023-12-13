@@ -19,9 +19,12 @@ import {
   TableCaption,
   TableContainer,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { Order } from "../../types/types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axiosRequest from "../../requests/requests";
 //   import axiosRequest from "../../../requests/requests";
 
 type Props = {
@@ -35,6 +38,22 @@ type Props = {
 function OrdersTable({ data, filter }: Props) {
   const columnHelper = createColumnHelper<Order>();
   const [sorting, setSorting] = useState<SortingState>([]);
+
+  const toast = useToast();
+  const queryCient = useQueryClient();
+
+  const deleteOrder = useMutation({
+    mutationFn: (id: number) => axiosRequest.post<Order>(`/deleteorder/${id}`),
+    onSuccess: ({ data }) => {
+      queryCient.invalidateQueries({
+        queryKey: ["order", data.user_id],
+      }),
+        toast({
+          description: "Order deleted succesfully",
+          status: "success",
+        });
+    },
+  });
 
   const columns = [
     columnHelper.accessor("id", {
@@ -100,13 +119,18 @@ function OrdersTable({ data, filter }: Props) {
           ))}
         </Thead>
         <Tbody>
-          {row?.map(({ id, getVisibleCells }) => (
+          {row?.map(({ id, getVisibleCells, original }) => (
             <Tr key={id}>
               {getVisibleCells()?.map(cell => (
                 <Td key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </Td>
               ))}
+              <Td>
+                <Button onClick={() => deleteOrder.mutate(original.id)}>
+                  Delete order
+                </Button>
+              </Td>
             </Tr>
           ))}
         </Tbody>

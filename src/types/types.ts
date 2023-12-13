@@ -5,7 +5,7 @@ export type Albums = {
   Price: number;
 };
 
-export type Products = {
+export type Product = {
   id: number;
   name: string;
   serial_number: string;
@@ -22,7 +22,7 @@ export type Usertype = {
 export type Order = {
   id: number;
   product_id: number;
-  Product: Products;
+  Product: Product;
   user_id: number;
   User: Usertype;
 };

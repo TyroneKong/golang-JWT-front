@@ -23,13 +23,13 @@ import {
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useState } from "react";
-import { Products } from "../../../types/types";
+import { Product } from "../../../types/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosRequest from "../../../requests/requests";
 import UserQueryCurrentUser from "../../../hooks/current-user";
 
 type Props = {
-  data: Products[];
+  data: Product[];
   filter: {
     filtering: string;
     setFiltering: React.Dispatch<React.SetStateAction<string>>;
@@ -37,7 +37,7 @@ type Props = {
 };
 
 function ProductsTable({ data, filter }: Props) {
-  const columnHelper = createColumnHelper<Products>();
+  const columnHelper = createColumnHelper<Product>();
   const [sorting, setSorting] = useState<SortingState>([]);
   const { data: user } = UserQueryCurrentUser();
   const queryClient = useQueryClient();
@@ -79,7 +79,8 @@ function ProductsTable({ data, filter }: Props) {
   const row = rowData();
 
   const deleteProduct = useMutation({
-    mutationFn: (id: number) => axiosRequest.delete(`/deleteproduct/${id}`),
+    mutationFn: (id: number) =>
+      axiosRequest.delete<Product>(`/deleteproduct/${id}`),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["products"],
