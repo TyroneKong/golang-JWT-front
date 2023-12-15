@@ -6,7 +6,7 @@ import { Usertype } from "../types/types";
 //   children: ReactNode;
 // };
 
-const userContext = createContext({} as Usertype);
+const userContext = createContext({} as Usertype | undefined);
 
 export function UserContextProvider({ children }: PropsWithChildren) {
   const { data: user } = UserQueryCurrentUser();
@@ -14,9 +14,10 @@ export function UserContextProvider({ children }: PropsWithChildren) {
   // test data
 
   const value = useMemo(
-    () => ({
-      ...user!,
-    }),
+    () =>
+      user && {
+        ...user,
+      },
     [user]
   );
 
