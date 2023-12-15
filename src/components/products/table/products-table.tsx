@@ -77,10 +77,9 @@ function ProductsTable({ data, filter }: Props) {
   const rowData = () => data && table.getRowModel().rows;
 
   const row = rowData();
-
   const deleteProduct = useMutation({
     mutationFn: (id: number) =>
-      axiosRequest.delete<Product>(`/deleteproduct/${id}`),
+      axiosRequest.delete<Product>(`/deleteproduct/${user?.id}/${id}`),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["products"],
