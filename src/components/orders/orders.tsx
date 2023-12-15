@@ -9,6 +9,9 @@ const Orders = () => {
   const { data: user } = UserQueryCurrentUser();
 
   const { data } = useGetOrderById(user?.id);
+
+  console.log("length of orders", data?.length);
+
   return (
     <>
       <SearchInput filter={{ filtering, setFiltering }} />

@@ -1,16 +1,16 @@
 import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import useUser from "../contexts/userContext";
+import { Roles } from "../enum/enum";
 
 type Props = {
   children: ReactNode;
 };
 
 function ProtectedRoute({ children }: Props) {
-  const { authorized } = useUser();
-  console.log("authorized", authorized);
+  const { role } = useUser();
 
-  if (!authorized) {
+  if (role !== Roles.Admin) {
     return <Navigate to="/login" />;
   }
   return children;

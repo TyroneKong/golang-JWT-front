@@ -17,6 +17,7 @@ export type Usertype = {
   username: string;
   email: string;
   password: string;
+  role: number;
 };
 
 export type Order = {

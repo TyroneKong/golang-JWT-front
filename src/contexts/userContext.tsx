@@ -1,43 +1,35 @@
-import {
-  PropsWithChildren,
-  createContext,
-  useContext,
-  useMemo,
-  useState,
-} from "react";
+import { PropsWithChildren, createContext, useContext, useMemo } from "react";
+import UserQueryCurrentUser from "../hooks/current-user";
+import { Usertype } from "../types/types";
 
 // type Child = {
 //   children: ReactNode;
 // };
 
-type User = {
-  authorized: boolean;
-  setAuthorized: React.Dispatch<React.SetStateAction<boolean>>;
-};
-const user = createContext({} as User);
+const userContext = createContext({} as Usertype);
 
 export function UserContextProvider({ children }: PropsWithChildren) {
-  const [authorized, setAuthorized] = useState(false);
+  const { data: user } = UserQueryCurrentUser();
 
   // test data
+
   const value = useMemo(
     () => ({
-      authorized,
-      setAuthorized,
+      ...user!,
     }),
-    [authorized]
+    [user]
   );
 
-  return <user.Provider value={value}>{children}</user.Provider>;
+  return <userContext.Provider value={value}>{children}</userContext.Provider>;
 }
 
-const useAuth = (): User => {
-  const context = useContext(user);
+const useUser = (): Usertype => {
+  const context = useContext(userContext);
 
   if (!context) {
-    throw new Error("uer context needs to wrapped in a provider");
+    throw new Error("user context needs to wrapped in a provider");
   }
   return context;
 };
 
-export default useAuth;
+export default useUser;

@@ -22,6 +22,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { Usertype } from "../../../types/types";
+import { Roles } from "../../../record/roles";
 
 type Props = {
   data: Usertype[];
@@ -51,6 +52,10 @@ function UserTable({ data, filter }: Props) {
     columnHelper.accessor("username", {
       header: "username",
       cell: info => info.getValue(),
+    }),
+    columnHelper.accessor("role", {
+      header: "role",
+      cell: info => Roles[info.getValue()],
     }),
   ];
 

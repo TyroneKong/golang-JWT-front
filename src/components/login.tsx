@@ -31,12 +31,10 @@ function Login() {
   });
   const navigate = useNavigate();
 
-  const { setAuthorized } = useUser();
   const login = useMutation({
     mutationFn: (body: { email: string; password: string }) =>
       axiosRequest.post("/login", body),
     onSuccess: () => {
-      setAuthorized(true);
       toast({
         title: "Logged in",
         description: "Login Successful",
