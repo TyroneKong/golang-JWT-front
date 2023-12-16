@@ -27,6 +27,7 @@ import { Product } from "../../../types/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosRequest from "../../../requests/requests";
 import UserQueryCurrentUser from "../../../hooks/current-user";
+import { Roles } from "../../../enum/enum";
 
 type Props = {
   data: Product[];
@@ -156,6 +157,7 @@ function ProductsTable({ data, filter }: Props) {
               </Td>
               <Td>
                 <Button
+                  isDisabled={user?.role === Roles.Internal}
                   ml={10}
                   size="lg"
                   colorScheme="red"
