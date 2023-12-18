@@ -13,7 +13,6 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { Inputs, schema } from "../schemas/loginSchema";
-import useUser from "../contexts/userContext";
 import axiosRequest from "../requests/requests";
 
 function Login() {
@@ -24,7 +23,7 @@ function Login() {
     handleSubmit,
     reset,
 
-    formState: { isValid, errors, isSubmitting },
+    formState: { errors, isSubmitting },
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     mode: "onChange",

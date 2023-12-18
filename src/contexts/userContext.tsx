@@ -27,6 +27,7 @@ export function UserContextProvider({ children }: PropsWithChildren) {
 const useUser = (): Usertype => {
   const context = useContext(userContext);
 
+  //TODO: remove check as data bneing null doesnt mean component is not wrapped in a provider
   if (!context) {
     throw new Error("user context needs to wrapped in a provider");
   }
